@@ -94,7 +94,7 @@ export default class PDVListView extends React.Component {
       var id = this.state.pdvs[this.state.selected].id;
       axios({
         method: 'delete',
-        url: 'http://localhost:8080/pdv/' + id,
+        url: 'https://secure-lake-82403.herokuapp.com/pdv/' + id,
         headers: {
           'Content-Type': 'application/json',
         },

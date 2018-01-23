@@ -94,7 +94,7 @@ export default class UserListView extends React.Component {
       var id = this.state.users[this.state.selected].id;
       axios({
         method: 'delete',
-        url: 'http://localhost:8080/user/' + id,
+        url: 'https://secure-lake-82403.herokuapp.com/user/' + id,
         headers: {
           'Content-Type': 'application/json',
         },
