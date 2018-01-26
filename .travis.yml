@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-  - "7"
+- '7'
 deploy:
   provider: heroku
   api_key:
-    secure: ccae1a30-d06d-4b9c-b6f9-e78b78904e85
-    app: radiant-shelf-54291
+    secure: KPY+IS0jy70i2ArQSZTABSRVFkw5HHHt/mGvEuZFE9G+mSfYIKnB87FcmVkXdu3CZ/CMb40J99n0Wq1preMmtMHEGebzZMupXVLZGe0xrysFynfCR4/J3bHT7I+OCjxU6L8ez6/7afBZRnQaKjygF2oDrSOt3GVzwOT1KtRvnYLRrIsKuKu77tFY6qwJbjnw2Kb+P+8DmKOXyeWFxFqrnlbhbiLHez904iuS12BnIWOBrmkFk4ZQk+I0X1buNaJJdLHXUtqYaJgmfSbVqNW3Kngu3TQ9B9yX/Ulnl4r0aGp0AYAPAq7y/re+1N6Mxt46VLPMyOLaxA4aStbWZlkUTUHN/2nxXb9JQClHKWWIW2MxGh4iCzURCp9y1TxZDiX8f8TL+WNVZ9kCgxdAj7Tmnt6l0cEEp10Dg3Jzpi7bBvvXRa4NCc8OCRBc9nnF7Eb/D76iBD8qn40psd/JpfuhtkizmO+5/DsmH3LNSfGT2z+JH909i4CWJmrwQQsnSzO0u21gZl6/Jan5Cy5vwQ8NESoAzbebMyQA2Bc2kDeyf+m5/J+gKmzmkLqUAFZdnI5cIBdgs/2pxxDPDvibgVvntbh3mekYbo8cxp0J3nk85f7uVkyYSrG25lS0ejzU7bbqQQ6Vpjnwd0807vwmi3qRc8g/MD/S8k15smtRbe8jJX0=
