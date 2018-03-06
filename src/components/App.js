@@ -1,40 +1,48 @@
-import React from 'react';
+import React from 'react'
+import { withRouter } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 
-import './App.css';
+import Login from './Login'
+import HomeView from './HomeView'
 
-export default class App extends React.Component {
+import './App.css'
+
+const cookies = new Cookies()
+
+class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
+    var credentials = cookies.get('credentials')
     this.state = {
-      isLogged: false
+      isLogged: !!credentials
     }
   }
 
-  switchScreens() {
-    if (this.props.location.state && this.props.location.state.isLogged) {
-      this.props.history.push({
-        pathname: '/pdvs',
-        state: {
-          isLogged: true,
-          credentials: this.props.location.state.credentials
-        }
-      })
-    } else {
-      this.props.history.push('/login');
-    }
+  routeToInitialState = () => {
+    console.log('redirect')
+    this.props.history.push('/', { state: {} })
   }
 
-  componentWillMount() {
-    this.switchScreens();
+  toLogin = () => {
+    this.state.isLogged = true
+    this.routeToInitialState()
+  }
+
+  logout = () => {
+    cookies.remove('credentials')
+    this.state.isLogged = false
+    this.routeToInitialState()
   }
 
   render() {
-    return (
-      <div>
-        <div className="routerView App">
-          Algo deu errado e o app não carregou como deveria!
-        </div>
-      </div>
-    );
+    if (this.state.isLogged) {
+      console.log('home')
+      return <HomeView logout={this.logout} />
+    } else {
+      console.log('login')
+      return <Login toLogin={this.toLogin} />
+    }
   }
 }
+
+export default withRouter(App)
