@@ -11,105 +11,32 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import Paper from 'material-ui/Paper'
 
+import TenantService from '../services/TenantService'
+
 import EmpresasBox from './EmpresasBox'
 
-const styles = {
-  root: {
-    // display: 'flex',
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-around'
-  },
-  gridList: {
-    // width: 500,
-    // height: 450,
-    // overflowY: 'auto'
-  }
-}
-
-const empresasData = [
-  {
-    id: 1,
-    nome: 'Empresa 1 LTDA',
-    responsavel: 'Junior',
-    fase: 'PROJETO'
-  },
-  {
-    id: 2,
-    nome: 'Empresa 2 LTDA',
-    responsavel: 'Junior',
-    fase: 'IMPLANTACAO'
-  },
-  {
-    id: 3,
-    nome: 'Empresa 3 LTDA',
-    responsavel: 'Junior',
-    fase: 'CRESCIMENTO'
-  },
-  {
-    id: 4,
-    nome: 'Empresa 4 LTDA',
-    responsavel: 'Junior',
-    fase: 'CONSOLIDACAO'
-  },
-  {
-    id: 5,
-    nome: 'Empresa 5 LTDA',
-    responsavel: 'Junior',
-    fase: 'GRADUACAO'
-  },
-  {
-    id: 6,
-    nome: 'Empresa 2 LTDA',
-    responsavel: 'Junior',
-    fase: 'IMPLANTACAO'
-  },
-  {
-    id: 7,
-    nome: 'Empresa 3 LTDA',
-    responsavel: 'Junior',
-    fase: 'CRESCIMENTO'
-  },
-  {
-    id: 8,
-    nome: 'Empresa 4 LTDA',
-    responsavel: 'Junior',
-    fase: 'CONSOLIDACAO'
-  },
-  {
-    id: 9,
-    nome: 'Empresa 5 LTDA',
-    responsavel: 'Junior',
-    fase: 'GRADUACAO'
-  },
-  {
-    id: 10,
-    nome: 'Empresa 2 LTDA',
-    responsavel: 'Junior',
-    fase: 'IMPLANTACAO'
-  },
-  {
-    id: 11,
-    nome: 'Empresa 3 LTDA',
-    responsavel: 'Junior',
-    fase: 'CRESCIMENTO'
-  },
-  {
-    id: 12,
-    nome: 'Empresa 4 LTDA',
-    responsavel: 'Junior',
-    fase: 'CONSOLIDACAO'
-  },
-  {
-    id: 13,
-    nome: 'Empresa 5 LTDA',
-    responsavel: 'Junior',
-    fase: 'GRADUACAO'
-  }
-]
+const tenantService = new TenantService()
 
 export default class EmpresasView extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      tenants: []
+    }
+  }
+
+  reloadGrid = () => {
+    tenantService.listAll(response => {
+      if (response.status === 200) {
+        this.setState({
+          tenants: response.data
+        })
+      }
+    })
+  }
+
+  componentDidMount = () => {
+    this.reloadGrid()
   }
 
   render() {
@@ -127,8 +54,8 @@ export default class EmpresasView extends React.Component {
             />
             <br />
           </div>
-          <GridList cols={4} cellHeight={'auto'} style={styles.gridList}>
-            {empresasData.map(empresa => <EmpresasBox empresa={empresa} />)}
+          <GridList cols={4} cellHeight={'auto'}>
+            {this.state.tenants.map(tenant => <EmpresasBox tenant={tenant} />)}
           </GridList>
         </Paper>
       </div>

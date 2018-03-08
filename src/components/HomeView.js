@@ -9,6 +9,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import EmpresasView from './EmpresasView'
 import AvaliacoesView from './AvaliacoesView'
 import EmpresaDetails from './EmpresaDetails'
+import AvaliacaoDetails from './AvaliacaoDetails'
 
 import LeftMenu from './LeftMenu'
 
@@ -39,6 +40,8 @@ class HomeView extends React.Component {
               <Route exact path="/empresas" component={EmpresasView} />
               <Route exact path="/avaliacoes" component={AvaliacoesView} />
               <Route exact path="/empresas/:id" component={EmpresaDetails} />
+              <Route exact path="/avaliacao/:id" component={AvaliacaoDetails} />
+              <Route exact path="/avaliacao/" component={AvaliacaoDetails} />
             </div>
           </main>
         </MuiThemeProvider>

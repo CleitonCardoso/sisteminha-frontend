@@ -16,23 +16,16 @@ export default class EmpresasBox extends React.Component {
   constructor(props) {
     console.log(props)
     super(props)
-    // this.state = {
-    //   empresa: props.empresa
-    // }
   }
 
   state = {
     open: false,
-    empresa: {
-      nome: 'Teste',
-      responsavel: 'fulano'
-    },
     phases: {
-      PROJETO: lime400,
-      IMPLANTACAO: green400,
-      CRESCIMENTO: cyan400,
-      CONSOLIDACAO: blue400,
-      GRADUACAO: red400
+      PROJECT: lime400,
+      IMPLANTATION: green400,
+      GROWING: cyan400,
+      CONSOLIDATION: blue400,
+      GRADUATION: red400
     }
   }
 
@@ -43,16 +36,16 @@ export default class EmpresasBox extends React.Component {
       <div>
         <Card
           style={{
-            backgroundColor: this.state.phases[this.props.empresa.fase]
+            backgroundColor: this.state.phases[this.props.tenant.maturityLevel]
           }}
         >
           <CardHeader
-            title={this.props.empresa.nome}
-            subtitle={this.props.empresa.responsavel}
+            title={this.props.tenant.companyName}
+            subtitle={this.props.tenant.companyOwner}
           />
           <CardText>DESCRIÇÃO DA FASE</CardText>
           <CardActions>
-            <Link to={'/empresas/' + this.props.empresa.id}>
+            <Link to={'/empresas/' + this.props.tenant.id}>
               <RaisedButton label="Visualizar" fullWidth={true} />
             </Link>
           </CardActions>

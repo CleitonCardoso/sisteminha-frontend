@@ -18,7 +18,10 @@ export default class EmpresaDetails extends React.Component {
     return (
       <div>
         <Paper zDepth={1}>
-          <GridList cols={2} cellHeight={'auto'} />
+          <GridList cols={2} cellHeight={'auto'}>
+            <div>Detalhes da empresa</div>
+            <div>Gráficos</div>
+          </GridList>
         </Paper>
       </div>
     )

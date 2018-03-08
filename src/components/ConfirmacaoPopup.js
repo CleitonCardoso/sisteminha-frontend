@@ -17,7 +17,10 @@ export default class ConfirmacaoPopup extends React.Component {
     this.refs.modal.handleClose()
   }
 
-  confirm = () => {}
+  confirm = () => {
+    this.props.confirm()
+    this.handleClose()
+  }
 
   render() {
     const actions = [

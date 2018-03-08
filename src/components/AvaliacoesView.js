@@ -1,5 +1,4 @@
 import React from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import IconButton from 'material-ui/IconButton'
 import Subheader from 'material-ui/Subheader'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
@@ -11,6 +10,7 @@ import axios from 'axios'
 import Moment from 'moment'
 import Cookies from 'universal-cookie'
 
+import AvaliacoesService from '../services/AvaliacoesService'
 import ConfirmacaoPopup from './ConfirmacaoPopup'
 
 import {
@@ -22,23 +22,38 @@ import {
   TableRowColumn
 } from 'material-ui/Table'
 
+const avaliacoesService = new AvaliacoesService()
+
 export default class AvaliacoesView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       selected: [],
-      avaliacoes: [{ detalhe: 'Ciclo 1', data: 'Fev', status: 'Finalizada' }]
+      evaluations: []
     }
   }
 
   addItem = e => {
     e.preventDefault()
-    this.refs.modal.handleOpen(this.getSelected(), this.state.credentials)
+    this.props.history.push('/avaliacao/#')
   }
 
-  removeItem = e => {
+  viewItem = e => {
+    e.preventDefault()
+    this.props.history.push('/avaliacao/' + this.getSelected().id)
+  }
+
+  confirmExclusion = e => {
     e.preventDefault()
     this.refs.confirmation.handleOpen()
+  }
+
+  removeItem = () => {
+    avaliacoesService.remove(response => {
+      if (response.status === 200) {
+        this.reloadList()
+      }
+    }, this.getSelected())
   }
 
   handleRowSelection = selectedRows => {
@@ -50,30 +65,45 @@ export default class AvaliacoesView extends React.Component {
     })
   }
 
+  reloadList = () => {
+    avaliacoesService.listAll(response => {
+      if (response.status === 200) {
+        this.setState({
+          selected: [],
+          evaluations: response.data
+        })
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.reloadList()
+  }
+
   getSelected = () => {
-    return this.state.avaliacoes[this.state.selected]
+    return this.state.evaluations[this.state.selected]
   }
 
   render() {
     return (
       <div>
-        <ConfirmacaoPopup ref="confirmation"/>
+        <ConfirmacaoPopup ref="confirmation" confirm={this.removeItem} />
         <Paper zDepth={1}>
           <div style={buttons}>
             <br />
             <RaisedButton
-              label={this.state.selected.length === 0 ? 'Adicionar' : 'Editar'}
+              label={this.getSelected() ? 'Visualizar' : 'Nova avaliação'}
               primary
               style={btn}
-              onClick={this.addItem}
+              onClick={this.getSelected() ? this.viewItem : this.addItem}
               disabled={this.state.selected.length > 1}
             />
             <RaisedButton
-              label="Remover"
+              label="Excluir"
               secondary
               style={btn}
               disabled={this.state.selected.length === 0}
-              onClick={this.removeItem}
+              onClick={this.confirmExclusion}
             />
             <br />
           </div>
@@ -90,14 +120,19 @@ export default class AvaliacoesView extends React.Component {
               </TableRow>
             </TableHeader>
             <TableBody showRowHover={true} deselectOnClickaway={false}>
-              {this.state.avaliacoes.map((avaliacao, index) => (
+              {this.state.evaluations.map((evaluation, index) => (
                 <TableRow
                   key={index}
                   selected={this.state.selected.indexOf(index) !== -1}
                 >
-                  <TableRowColumn>{avaliacao.detalhe}</TableRowColumn>
-                  <TableRowColumn>{avaliacao.data}</TableRowColumn>
-                  <TableRowColumn>{avaliacao.status}</TableRowColumn>
+                  <TableRowColumn>{evaluation.title}</TableRowColumn>
+                  <TableRowColumn>
+                    {Moment(evaluation.startingDate).format('MM/DD/YYYY')}
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    {Moment(evaluation.endingDate).format('MM/DD/YYYY')}
+                  </TableRowColumn>
+                  <TableRowColumn>{evaluation.status}</TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
