@@ -114,8 +114,9 @@ export default class AvaliacoesView extends React.Component {
           >
             <TableHeader enableSelectAll={true} displaySelectAll={true}>
               <TableRow>
-                <TableHeaderColumn>Detalhe</TableHeaderColumn>
-                <TableHeaderColumn>Mês</TableHeaderColumn>
+                <TableHeaderColumn>Título</TableHeaderColumn>
+                <TableHeaderColumn>Data de início</TableHeaderColumn>
+                <TableHeaderColumn>Data de finalização</TableHeaderColumn>
                 <TableHeaderColumn>Status</TableHeaderColumn>
               </TableRow>
             </TableHeader>
