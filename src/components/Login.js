@@ -8,7 +8,11 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 import Cookies from 'universal-cookie'
 
+import SessionService from '../services/SessionService'
+
 const cookies = new Cookies()
+
+const sessionService = new SessionService()
 
 class Login extends Component {
   constructor(props) {
@@ -32,8 +36,7 @@ class Login extends Component {
     })
   }
 
-  login = e => {
-    if (e) e.preventDefault()
+  login = () => {
     let data =
       'username=' + this.state.username + '&password=' + this.state.password
 

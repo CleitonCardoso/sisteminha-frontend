@@ -45,16 +45,13 @@ export default class AxisView extends React.Component {
         <GridList cols={2} cellHeight={'auto'}>
           <div>
             <Card style={{ margin: 20 }}>
+              <TextField floatingLabelText="Título" />
               <TextField
-                ref="title"
-                value={this.state.mainQuestion.title}
-                floatingLabelText="Título"
-              />
-              <TextField
-                ref="content"
                 multiLine={true}
                 fullWidth={true}
-                value={this.state.mainQuestion.content}
+                onChange={(event, newValue) =>
+                  this.setState({ mainQuestion: { content: newValue } })
+                }
                 floatingLabelText="Pergunta"
               />
               <Toolbar>
@@ -68,11 +65,15 @@ export default class AxisView extends React.Component {
                 </ToolbarGroup>
               </Toolbar>
             </Card>
-            {this.props.questions.map((question, index) => (
-              <Card style={{ margin: 20 }}>
-                <h1>{question.content} </h1>
-              </Card>
-            ))}
+            {this.props.questions &&
+              this.props.questions.map((question, index) => (
+                <Card style={{ margin: 20 }}>
+                  <h1>{question.content} </h1>
+                </Card>
+              ))}
+          </div>
+          <div>
+            <h1>8 Pontos</h1>
           </div>
         </GridList>
         <br />

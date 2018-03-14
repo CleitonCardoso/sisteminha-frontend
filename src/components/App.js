@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import Cookies from 'universal-cookie'
+import axios from 'axios'
 
 import Login from './Login'
 import HomeView from './HomeView'
@@ -19,7 +20,6 @@ class App extends React.Component {
   }
 
   routeToInitialState = () => {
-    console.log('redirect')
     this.props.history.push('/', { state: {} })
   }
 
@@ -29,9 +29,27 @@ class App extends React.Component {
   }
 
   logout = () => {
-    cookies.remove('credentials')
-    this.state.isLogged = false
-    this.routeToInitialState()
+    var credentials = cookies.get('credentials')
+    let data =
+      'username=' + credentials.username + '&password=' + credentials.password
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/logout',
+      data: data,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => {
+        console.log(res)
+        cookies.remove('credentials')
+        this.state.isLogged = false
+        this.routeToInitialState()
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   render() {
