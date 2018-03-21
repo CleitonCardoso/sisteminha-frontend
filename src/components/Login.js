@@ -10,6 +10,10 @@ import Cookies from 'universal-cookie'
 
 import SessionService from '../services/SessionService'
 
+import { API_ROOT } from '../services/api-config'
+
+const serverUrl = API_ROOT
+
 const cookies = new Cookies()
 
 const sessionService = new SessionService()
@@ -42,7 +46,7 @@ class Login extends Component {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/login',
+      url: serverUrl + '/login',
       data: data,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
