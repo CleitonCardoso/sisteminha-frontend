@@ -36,7 +36,8 @@ export default class EmpresasBox extends React.Component {
       <div>
         <Card
           style={{
-            backgroundColor: this.state.phases[this.props.tenant.maturityLevel]
+            backgroundColor: this.state.phases[this.props.tenant.maturityLevel],
+            margin: 10
           }}
         >
           <CardHeader

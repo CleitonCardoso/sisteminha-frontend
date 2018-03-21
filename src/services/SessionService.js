@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Cookies from 'universal-cookie'
+import { API_ROOT } from './api-config'
 
-const serverUrl = 'http://localhost:8080'
+const serverUrl = API_ROOT
 
 const cookies = new Cookies()
 
@@ -11,7 +12,7 @@ export default class SessionService {
     let data = 'username=' + username + '&password=' + password
     axios({
       method: 'post',
-      url: 'http://localhost:8080/login',
+      url: serverUrl,
       data: data,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Cookies from 'universal-cookie'
+import { API_ROOT } from './api-config'
 
-const serverUrl = 'http://localhost:8080'
+const serverUrl = API_ROOT
 
 const cookies = new Cookies()
 
