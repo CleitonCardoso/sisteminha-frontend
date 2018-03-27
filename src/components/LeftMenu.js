@@ -4,6 +4,7 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import BusinessCenter from 'material-ui/svg-icons/places/business-center'
 import ContentPaste from 'material-ui/svg-icons/content/content-paste'
+import Settings from 'material-ui/svg-icons/action/settings'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 
@@ -22,13 +23,19 @@ class LeftMenu extends React.Component {
               style={itemButton}
               primaryText="Incubadas"
               containerElement={<NavLink to="/empresas" />}
-              leftIcon={<BusinessCenter />}
+              leftIcon={<BusinessCenter style={icon} />}
             />
             <MenuItem
               style={itemButton}
               primaryText="Avaliações"
               containerElement={<NavLink to="/avaliacoes" />}
-              leftIcon={<ContentPaste />}
+              leftIcon={<ContentPaste style={icon} />}
+            />
+            <MenuItem
+              style={itemButton}
+              primaryText="Configurações"
+              containerElement={<NavLink to="/configuracoes" />}
+              leftIcon={<Settings style={icon} />}
             />
           </Menu>
         </Paper>
@@ -47,3 +54,5 @@ const itemButton = {
   width: '11.3em',
   overflow: 'hidden'
 }
+
+const icon = {}

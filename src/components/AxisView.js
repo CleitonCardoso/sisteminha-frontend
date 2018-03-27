@@ -12,6 +12,9 @@ import MenuItem from 'material-ui/MenuItem'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import RaisedButton from 'material-ui/RaisedButton'
 import QuestionsService from '../services/QuestionsService'
+import FlatButton from 'material-ui/FlatButton'
+
+import Modal from './Modal'
 
 import {
   Toolbar,
@@ -27,30 +30,62 @@ export default class AxisView extends React.Component {
     super(props)
     this.state = {
       mainQuestion: {
-        title: 'Questão'
+        axis: this.props.type
       },
       questions: []
     }
   }
 
   handleSave = () => {
-    questionsService.save(response => {
-      console.log(response.data)
-    }, this.props.evaluation)
+    if (
+      this.state.mainQuestion.title === undefined ||
+      this.state.mainQuestion.content === undefined
+    ) {
+      this.refs.modal.handleOpen()
+    } else {
+      questionsService.save(
+        response => {
+          this.refs.title.setState({ value: '' })
+          this.refs.content.setState({ value: '' })
+          this.setState({ mainQuestion: {} })
+          this.props.success()
+        },
+        this.props.evaluation,
+        this.state.mainQuestion
+      )
+    }
+  }
+
+  closeModal = () => {
+    this.refs.modal.handleClose()
   }
 
   render() {
     return (
       <div>
+        <Modal
+          ref="modal"
+          title={'Preencha os campos corretamente!'}
+          actions={
+            <FlatButton label="Ok" primary={true} onClick={this.closeModal} />
+          }
+        />
         <GridList cols={2} cellHeight={'auto'}>
           <div>
             <Card style={{ margin: 20 }}>
-              <TextField floatingLabelText="Título" />
               <TextField
+                ref="title"
+                floatingLabelText="Título"
+                onChange={(event, newValue) =>
+                  (this.state.mainQuestion.title = newValue)
+                }
+              />
+              <TextField
+                ref="content"
                 multiLine={true}
                 fullWidth={true}
                 onChange={(event, newValue) =>
-                  this.setState({ mainQuestion: { content: newValue } })
+                  (this.state.mainQuestion.content = newValue)
                 }
                 floatingLabelText="Pergunta"
               />
@@ -68,7 +103,8 @@ export default class AxisView extends React.Component {
             {this.props.questions &&
               this.props.questions.map((question, index) => (
                 <Card style={{ margin: 20 }}>
-                  <h1>{question.content} </h1>
+                  <h1>{question.title} </h1>
+                  <p>{question.content} </p>
                 </Card>
               ))}
           </div>

@@ -62,6 +62,7 @@ export default class AvaliacaoDetails extends React.Component {
       if (response.status === 200) {
         this.setState({
           evaluation: {
+            id: this.props.match.params.id,
             questions: response.data
           }
         })
@@ -83,50 +84,26 @@ export default class AvaliacaoDetails extends React.Component {
   }
 
   render() {
-    return (
-      <div>
+    return <div>
         <Paper zDepth={1} style={{ margin: '20 20 20 20' }}>
-          {this.state && (
-            <Tabs inkBarStyle={styles.INK_BAR}>
+          {this.state && <Tabs inkBarStyle={styles.INK_BAR}>
               <Tab label="Empreendedor" style={styles.ENTREPRENEUR}>
-                <AxisView
-                  questions={this.getQuestions('ENTREPRENEUR')}
-                  type="ENTREPRENEUR"
-                  evaluation={this.state.evaluation}
-                />
+                <AxisView questions={this.getQuestions('ENTREPRENEUR')} type="ENTREPRENEUR" evaluation={this.state.evaluation} success={this.loadObjects} />
               </Tab>
               <Tab label="Tecnologia" style={styles.TECHNOLOGY}>
-                <AxisView
-                  questions={this.getQuestions('TECHNOLOGY')}
-                  type="TECHNOLOGY"
-                  evaluation={this.state.evaluation}
-                />
+                <AxisView questions={this.getQuestions('TECHNOLOGY')} type="TECHNOLOGY" evaluation={this.state.evaluation} success={this.loadObjects} />
               </Tab>
               <Tab label="Mercado" style={styles.MARKET}>
-                <AxisView
-                  questions={this.getQuestions('MARKET')}
-                  type="MARKET"
-                  evaluation={this.state.evaluation}
-                />
+                <AxisView questions={this.getQuestions('MARKET')} type="MARKET" evaluation={this.state.evaluation} success={this.loadObjects} />
               </Tab>
               <Tab label="Capital" style={styles.CAPITAL}>
-                <AxisView
-                  questions={this.getQuestions('CAPITAL')}
-                  type="CAPITAL"
-                  evaluation={this.state.evaluation}
-                />
+                <AxisView questions={this.getQuestions('CAPITAL')} type="CAPITAL" evaluation={this.state.evaluation} success={this.loadObjects} />
               </Tab>
               <Tab label="Gestão" style={styles.MANAGEMENT}>
-                <AxisView
-                  questions={this.getQuestions('MANAGEMENT')}
-                  type="MANAGEMENT"
-                  evaluation={this.state.evaluation}
-                />
+                <AxisView questions={this.getQuestions('MANAGEMENT')} type="MANAGEMENT" evaluation={this.state.evaluation} success={this.loadObjects} />
               </Tab>
-            </Tabs>
-          )}
+            </Tabs>}
         </Paper>
       </div>
-    )
   }
 }
