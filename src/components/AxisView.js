@@ -13,7 +13,7 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import RaisedButton from 'material-ui/RaisedButton'
 import QuestionsService from '../services/QuestionsService'
 import FlatButton from 'material-ui/FlatButton'
-
+import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import Modal from './Modal'
 
 import {
@@ -56,6 +56,12 @@ export default class AxisView extends React.Component {
     }
   }
 
+  delete = (question, event) => {
+    questionsService.remove(question, response => {
+      this.props.success()
+    })
+  }
+
   closeModal = () => {
     this.refs.modal.handleClose()
   }
@@ -72,7 +78,7 @@ export default class AxisView extends React.Component {
         />
         <GridList cols={2} cellHeight={'auto'}>
           <div>
-            <Card style={{ margin: 20 }}>
+            <Card style={{ margin: 20, padding: 10 }}>
               <TextField
                 ref="title"
                 floatingLabelText="Título"
@@ -102,7 +108,16 @@ export default class AxisView extends React.Component {
             </Card>
             {this.props.questions &&
               this.props.questions.map((question, index) => (
-                <Card style={{ margin: 20 }}>
+                <Card style={{ margin: 20, padding: 10 }}>
+                  <IconMenu
+                    iconButtonElement={<IconButton><ExpandMore /></IconButton>}
+                    onChange={this.handleChangeSingle}
+                    value={this.state.valueSingle}
+                    style={{ float: 'right' }}
+                  >
+                    <MenuItem value="1" primaryText="Editar" />
+                    <MenuItem value="2" primaryText="Excluir" onClick={this.delete.bind(this, question)} />
+                  </IconMenu>
                   <h1>{question.title} </h1>
                   <p>{question.content} </p>
                 </Card>

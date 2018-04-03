@@ -47,12 +47,12 @@ class LeftMenu extends React.Component {
 export default withRouter(LeftMenu)
 
 const style = {
-  position: 'inline-block'
+  // position: 'inline-block'
 }
 
 const itemButton = {
-  width: '11.3em',
-  overflow: 'hidden'
+  width: '14.4em',
+  // overflow: 'hidden'
 }
 
 const icon = {}

@@ -51,4 +51,25 @@ export default class QuestionsService {
         console.log(error)
       })
   }
+
+  remove = (question, callback) => {
+    var credentials = cookies.get('credentials')
+    axios({
+      method: 'delete',
+      url: serverUrl + '/evaluation/' + question.id + '/question',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      }
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 }

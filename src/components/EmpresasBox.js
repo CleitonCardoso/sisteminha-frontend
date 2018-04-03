@@ -12,6 +12,30 @@ import {
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
+
+const phases = {
+  PROJECT: {
+    title: 'Projeto',
+    color: lime400
+  },
+  IMPLANTATION: {
+    title: 'Implantação',
+    color: green400
+  },
+  GROWING: {
+    title: 'Crescimento',
+    color: cyan400
+  },
+  CONSOLIDATION: {
+    title: 'Consolidação',
+    color: blue400
+  },
+  GRADUATION: {
+    title: 'Graduação',
+    color: red400
+  }
+}
+
 export default class EmpresasBox extends React.Component {
   constructor(props) {
     console.log(props)
@@ -19,32 +43,23 @@ export default class EmpresasBox extends React.Component {
   }
 
   state = {
-    open: false,
-    phases: {
-      PROJECT: lime400,
-      IMPLANTATION: green400,
-      GROWING: cyan400,
-      CONSOLIDATION: blue400,
-      GRADUATION: red400
-    }
+    open: false
   }
-
-  // projeto, implantação, crescimento, consolidação e gradução
 
   render() {
     return (
       <div>
         <Card
           style={{
-            backgroundColor: this.state.phases[this.props.tenant.maturityLevel],
-            margin: 10
+            backgroundColor: phases[this.props.tenant.maturityLevel].color,
+            margin: 10,
           }}
         >
           <CardHeader
             title={this.props.tenant.companyName}
             subtitle={this.props.tenant.companyOwner}
           />
-          <CardText>DESCRIÇÃO DA FASE</CardText>
+          <CardText>{phases[this.props.tenant.maturityLevel].title}</CardText>
           <CardActions>
             <Link to={'/empresas/' + this.props.tenant.id}>
               <RaisedButton label="Visualizar" fullWidth={true} />
