@@ -1,27 +1,19 @@
 import React from 'react'
 
 import TextField from 'material-ui/TextField'
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
-import { GridList, GridTile } from 'material-ui/GridList'
+import { Card } from 'material-ui/Card'
+import { GridList } from 'material-ui/GridList'
 
 import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton'
-import FontIcon from 'material-ui/FontIcon'
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import MenuItem from 'material-ui/MenuItem'
-import DropDownMenu from 'material-ui/DropDownMenu'
 import RaisedButton from 'material-ui/RaisedButton'
 import QuestionsService from '../services/QuestionsService'
 import FlatButton from 'material-ui/FlatButton'
-import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
+import ExpandMore from 'material-ui/svg-icons/navigation/expand-more'
 import Modal from './Modal'
 
-import {
-  Toolbar,
-  ToolbarGroup,
-  ToolbarSeparator,
-  ToolbarTitle
-} from 'material-ui/Toolbar'
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
 
 const questionsService = new QuestionsService()
 
@@ -45,9 +37,11 @@ export default class AxisView extends React.Component {
     } else {
       questionsService.save(
         response => {
-          this.refs.title.setState({ value: '' })
-          this.refs.content.setState({ value: '' })
-          this.setState({ mainQuestion: {} })
+          this.setState({
+            mainQuestion: {
+              axis: this.props.type
+            }
+          })
           this.props.success()
         },
         this.props.evaluation,
@@ -58,12 +52,20 @@ export default class AxisView extends React.Component {
 
   delete = (question, event) => {
     questionsService.remove(question, response => {
-      this.props.success()
+      this.state.questions.push(question)
     })
   }
 
   closeModal = () => {
     this.refs.modal.handleClose()
+  }
+
+  handleFieldChange = (field, event) => {
+    var mainQuestion = this.state.mainQuestion
+    mainQuestion[field] = event.target.value
+    this.setState({
+      mainQuestion: mainQuestion
+    })
   }
 
   render() {
@@ -82,17 +84,13 @@ export default class AxisView extends React.Component {
               <TextField
                 ref="title"
                 floatingLabelText="Título"
-                onChange={(event, newValue) =>
-                  (this.state.mainQuestion.title = newValue)
-                }
+                onChange={this.handleFieldChange.bind(this, 'title')}
               />
               <TextField
                 ref="content"
                 multiLine={true}
                 fullWidth={true}
-                onChange={(event, newValue) =>
-                  (this.state.mainQuestion.content = newValue)
-                }
+                onChange={this.handleFieldChange.bind(this, 'content')}
                 floatingLabelText="Pergunta"
               />
               <Toolbar>
@@ -108,15 +106,23 @@ export default class AxisView extends React.Component {
             </Card>
             {this.props.questions &&
               this.props.questions.map((question, index) => (
-                <Card style={{ margin: 20, padding: 10 }}>
+                <Card style={{ margin: 20, padding: 10 }} key={index}>
                   <IconMenu
-                    iconButtonElement={<IconButton><ExpandMore /></IconButton>}
+                    iconButtonElement={
+                      <IconButton>
+                        <ExpandMore />
+                      </IconButton>
+                    }
                     onChange={this.handleChangeSingle}
                     value={this.state.valueSingle}
                     style={{ float: 'right' }}
                   >
                     <MenuItem value="1" primaryText="Editar" />
-                    <MenuItem value="2" primaryText="Excluir" onClick={this.delete.bind(this, question)} />
+                    <MenuItem
+                      value="2"
+                      primaryText="Excluir"
+                      onClick={this.delete.bind(this, question)}
+                    />
                   </IconMenu>
                   <h1>{question.title} </h1>
                   <p>{question.content} </p>

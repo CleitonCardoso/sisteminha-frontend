@@ -4,24 +4,21 @@ import AppBar from 'material-ui/AppBar'
 import FlatButton from 'material-ui/FlatButton'
 import { withRouter } from 'react-router-dom'
 
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import EmpresasView from './EmpresasView'
 import AvaliacoesView from './AvaliacoesView'
 import EmpresaDetails from './EmpresaDetails'
 import AvaliacaoDetails from './AvaliacaoDetails'
+import ConfigurationsView from './ConfigurationsView'
 
 import LeftMenu from './LeftMenu'
 
 class HomeView extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
-      <div id="page">
-        <MuiThemeProvider>
+      <MuiThemeProvider>
+        <div id="page">
           <header>
             <AppBar
               title={<span>Inovaparq</span>}
@@ -35,17 +32,18 @@ class HomeView extends React.Component {
             <LeftMenu parentContext={this} appContext={this.props.appContext} />
           </nav>
           <main>
-            <div>
+            <div> 
               <Route exact path="/" component={EmpresasView} />
               <Route exact path="/empresas" component={EmpresasView} />
               <Route exact path="/avaliacoes" component={AvaliacoesView} />
               <Route exact path="/empresas/:id" component={EmpresaDetails} />
               <Route exact path="/avaliacao/:id" component={AvaliacaoDetails} />
               <Route exact path="/avaliacao/" component={AvaliacaoDetails} />
+              <Route exact path="/configuracoes/" component={ConfigurationsView} />
             </div>
           </main>
-        </MuiThemeProvider>
-      </div>
+        </div>
+      </MuiThemeProvider>
     )
   }
 }

@@ -16,26 +16,26 @@ class LeftMenu extends React.Component {
 
   render() {
     return (
-      <div style={style}>
+      <div>
         <Paper>
           <Menu>
             <MenuItem
               style={itemButton}
               primaryText="Incubadas"
               containerElement={<NavLink to="/empresas" />}
-              leftIcon={<BusinessCenter style={icon} />}
+              leftIcon={<BusinessCenter />}
             />
             <MenuItem
               style={itemButton}
               primaryText="Avaliações"
               containerElement={<NavLink to="/avaliacoes" />}
-              leftIcon={<ContentPaste style={icon} />}
+              leftIcon={<ContentPaste />}
             />
             <MenuItem
               style={itemButton}
               primaryText="Configurações"
               containerElement={<NavLink to="/configuracoes" />}
-              leftIcon={<Settings style={icon} />}
+              leftIcon={<Settings />}
             />
           </Menu>
         </Paper>
@@ -46,13 +46,6 @@ class LeftMenu extends React.Component {
 
 export default withRouter(LeftMenu)
 
-const style = {
-  // position: 'inline-block'
-}
-
 const itemButton = {
-  width: '14.4em',
-  // overflow: 'hidden'
+  width: '14.4em'
 }
-
-const icon = {}

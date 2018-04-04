@@ -23,3 +23,8 @@
   grid-area: main;
   margin: 20px 10px 10px 10px;  
 }
+
+html {
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+}

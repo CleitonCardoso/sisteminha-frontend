@@ -8,6 +8,10 @@ import HomeView from './HomeView'
 
 import './App.css'
 
+import { API_ROOT } from '../services/api-config'
+
+const serverUrl = API_ROOT
+
 const cookies = new Cookies()
 
 class App extends React.Component {
@@ -24,7 +28,9 @@ class App extends React.Component {
   }
 
   toLogin = () => {
-    this.state.isLogged = true
+    this.setState({
+      isLogged: true
+    })
     this.routeToInitialState()
   }
 
@@ -35,16 +41,17 @@ class App extends React.Component {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/logout',
+      url: serverUrl + '/logout',
       data: data,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then(res => {
-        console.log(res)
         cookies.remove('credentials')
-        this.state.isLogged = false
+        this.setState({
+          isLogged: false
+        })
         this.routeToInitialState()
       })
       .catch(error => {
@@ -54,10 +61,8 @@ class App extends React.Component {
 
   render() {
     if (this.state.isLogged) {
-      console.log('home')
       return <HomeView logout={this.logout} />
     } else {
-      console.log('login')
       return <Login toLogin={this.toLogin} />
     }
   }

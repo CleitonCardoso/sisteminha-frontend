@@ -8,15 +8,11 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 import Cookies from 'universal-cookie'
 
-import SessionService from '../services/SessionService'
-
 import { API_ROOT } from '../services/api-config'
 
 const serverUrl = API_ROOT
 
 const cookies = new Cookies()
-
-const sessionService = new SessionService()
 
 class Login extends Component {
   constructor(props) {
@@ -30,7 +26,7 @@ class Login extends Component {
     }
 
     if (this.state.isLogged) {
-      this.props.toLogin
+      this.props.toLogin()
     }
   }
 

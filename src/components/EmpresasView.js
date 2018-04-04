@@ -1,14 +1,6 @@
 import React from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { GridList, GridTile } from 'material-ui/GridList'
-import IconButton from 'material-ui/IconButton'
-import Subheader from 'material-ui/Subheader'
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
-
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
+import { GridList } from 'material-ui/GridList'
 import RaisedButton from 'material-ui/RaisedButton'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
 import Paper from 'material-ui/Paper'
 
 import TenantService from '../services/TenantService'

@@ -1,29 +1,30 @@
 import React from 'react'
 
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
-import { GridList, GridTile } from 'material-ui/GridList'
+import { GridList } from 'material-ui/GridList'
 
 export default class EmpresaDetails extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  state = {}
-
-  // projeto, implantação, crescimento, consolidação e gradução
-
   render() {
     return (
       <div>
-        <Paper zDepth={1}>
+        <Paper zDepth={1} style={paper}>
           <GridList cols={2} cellHeight={'auto'}>
-            <div>Detalhes da empresa</div>
-            <div>Gráficos</div>
+            <div>
+              <h1>Ovos do Sítio - granja digital</h1>
+              <h3>Sérgião berranteiro</h3>
+
+              <div>adicionar gráfico da ultima avaliação</div>
+            </div>
+            <div>
+              <h1>Lista de avaliações respondidas</h1>
+            </div>
           </GridList>
         </Paper>
       </div>
     )
   }
+}
+
+const paper = {
+  padding: 10
 }

@@ -1,14 +1,9 @@
 import React from 'react'
 import FlatButton from 'material-ui/FlatButton'
-import TextField from 'material-ui/TextField'
 
 import Modal from './Modal'
 
 export default class ConfirmacaoPopup extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   handleOpen = () => {
     this.refs.modal.handleOpen()
   }

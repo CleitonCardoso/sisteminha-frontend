@@ -2,8 +2,6 @@ let backendHost
 
 const hostname = window && window.location && window.location.hostname
 
-console.log(hostname)
-
 if (hostname === 'localhost') {
   backendHost = 'http://localhost:8080'
 } else if (hostname === 'radiant-shelf-54291.herokuapp.com') {

@@ -1,14 +1,7 @@
 import React from 'react'
-import IconButton from 'material-ui/IconButton'
-import Subheader from 'material-ui/Subheader'
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
-import AppBar from 'material-ui/AppBar'
-import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
-import axios from 'axios'
 import Moment from 'moment'
-import Cookies from 'universal-cookie'
 
 import AvaliacoesService from '../services/AvaliacoesService'
 import ConfirmacaoPopup from './ConfirmacaoPopup'
@@ -92,7 +85,7 @@ export default class AvaliacoesView extends React.Component {
           <div style={buttons}>
             <br />
             <RaisedButton
-              label={this.getSelected() ? 'Visualizar' : 'Nova avaliação'}
+              label={this.getSelected() ? 'Editar' : 'Nova avaliação'}
               primary
               style={btn}
               onClick={this.getSelected() ? this.viewItem : this.addItem}
@@ -128,10 +121,10 @@ export default class AvaliacoesView extends React.Component {
                 >
                   <TableRowColumn>{evaluation.title}</TableRowColumn>
                   <TableRowColumn>
-                    {Moment(evaluation.startingDate).format('MM/DD/YYYY')}
+                    {Moment(evaluation.startingDate).format('DD/MM/YYYY')}
                   </TableRowColumn>
                   <TableRowColumn>
-                    {Moment(evaluation.endingDate).format('MM/DD/YYYY')}
+                    {Moment(evaluation.endingDate).format('DD/MM/YYYY')}
                   </TableRowColumn>
                   <TableRowColumn>{evaluation.status}</TableRowColumn>
                 </TableRow>
