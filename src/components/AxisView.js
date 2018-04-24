@@ -52,7 +52,7 @@ export default class AxisView extends React.Component {
 
   delete = (question, event) => {
     questionsService.remove(question, response => {
-      this.state.questions.push(question)
+      this.props.success()
     })
   }
 
