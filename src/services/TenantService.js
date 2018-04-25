@@ -51,4 +51,26 @@ export default class TenantService {
         console.log(error)
       })
   }
+
+  save = (callback, tenant) => {
+    var credentials = cookies.get('credentials')
+    axios({
+      method: 'post',
+      url: serverUrl + '/tenant',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      },
+      data: tenant
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 }

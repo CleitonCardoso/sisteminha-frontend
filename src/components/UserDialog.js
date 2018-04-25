@@ -21,7 +21,7 @@ export default class UserDialog extends React.Component {
     }
   }
 
-  handleOpen = (user, credentials) => {
+  handleOpen = (user) => {
     if (!user)
       user = {};
     this.setState({ open: true, user: user });
@@ -57,11 +57,11 @@ export default class UserDialog extends React.Component {
   render() {
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="Cancelar"
         primary={true}
         onClick={this.handleClose} />,
       <FlatButton
-        label="Submit"
+        label="Salvar"
         primary={true}
         keyboardFocused={true}
         onClick={this.handleSave} />,

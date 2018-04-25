@@ -3,6 +3,7 @@ import { GridList } from 'material-ui/GridList'
 import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
 
+import TenantDialog from './TenantDialog'
 import TenantService from '../services/TenantService'
 
 import EmpresasBox from './EmpresasBox'
@@ -15,6 +16,10 @@ export default class EmpresasView extends React.Component {
     this.state = {
       tenants: []
     }
+  }
+
+  addItem = () => {
+    this.refs.myDialog.handleOpen();
   }
 
   reloadGrid = () => {
@@ -34,6 +39,7 @@ export default class EmpresasView extends React.Component {
   render() {
     return (
       <div>
+        <TenantDialog ref="myDialog" handler={this.reloadGrid} />
         <Paper zDepth={1}>
           <div style={buttons}>
             <br />
@@ -41,8 +47,7 @@ export default class EmpresasView extends React.Component {
               label="Adicionar"
               primary
               style={btn}
-              // onClick={this.addItem}
-              // disabled={this.state.selected.length > 1}
+              onClick={this.addItem}
             />
             <br />
           </div>
