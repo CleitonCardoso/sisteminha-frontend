@@ -5,6 +5,10 @@ import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import Toggle from 'material-ui/Toggle';
 
+import UserService from '../services/UserService'
+
+const userService = new UserService();
+
 export default class UserDialog extends React.Component {
 
   constructor(props) {
@@ -20,7 +24,7 @@ export default class UserDialog extends React.Component {
   handleOpen = (user, credentials) => {
     if (!user)
       user = {};
-    this.setState({ open: true, user: user, credentials: credentials });
+    this.setState({ open: true, user: user });
   };
 
   handleClose = (event) => {
@@ -30,24 +34,11 @@ export default class UserDialog extends React.Component {
 
   handleSave = (event) => {
     event.preventDefault();
-
-    axios({
-      method: 'post',
-      url: 'https://secure-lake-82403.herokuapp.com/user',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      auth: {
-        username: this.state.credentials.username,
-        password: this.state.credentials.password
-      },
-      data: this.state.user
-    }).then((response) => {
-      this.handleClose();
-    }).catch((error) => {
-      console.log(error);
-    });
-
+    userService.save(response => {
+      if (response.status === 200) {
+        this.handleClose()
+      }
+    }, this.state.user)
   };
 
   setValue = (event) => {

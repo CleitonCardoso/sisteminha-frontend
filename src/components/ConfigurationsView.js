@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import IncubatorService from '../services/IncubatorService'
 
+import UserListView from './UserListView'
+
 const incubatorService = new IncubatorService()
 
 export default class ConfigurationsView extends React.Component {
@@ -49,13 +51,14 @@ export default class ConfigurationsView extends React.Component {
             />
 
           </div>
-          <hr />
+        </Paper>
+        <br />
+        <Paper zDepth={1} style={paper}>
           <h1>Usuários</h1>
-          <div>
-            A fazer: adicionar uma lista de usuários e botão que abre modal com
-            formulário para novo usuário
-          </div>
-
+          <UserListView />
+        </Paper>
+        <br />
+        <Paper zDepth={1} style={paper}>
           <h1>Configuração de login</h1>
           <div>A fazer: adicionar formulário de alteração de login e senha</div>
         </Paper>
