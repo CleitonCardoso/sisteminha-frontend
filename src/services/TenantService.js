@@ -7,6 +7,27 @@ const serverUrl = API_ROOT
 const cookies = new Cookies()
 
 export default class TenantService {
+  get = (callback, tenant) => {
+    var credentials = cookies.get('credentials')
+    axios({
+      method: 'get',
+      url: serverUrl + '/tenant/' + tenant.id,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      }
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   listAll = callback => {
     var credentials = cookies.get('credentials')
 

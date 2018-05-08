@@ -17,6 +17,7 @@ export default class UserDialog extends React.Component {
     this.state = {
       open: false,
       user: {
+        role : 'TENANT'
       }
     }
   }

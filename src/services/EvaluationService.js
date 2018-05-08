@@ -6,7 +6,7 @@ const serverUrl = API_ROOT
 
 const cookies = new Cookies()
 
-export default class AvaliacoesService {
+export default class EvaluationsService {
   listAll = callback => {
     var credentials = cookies.get('credentials')
 

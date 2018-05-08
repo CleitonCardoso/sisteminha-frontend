@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
 import Moment from 'moment'
 
-import AvaliacoesService from '../services/AvaliacoesService'
+import EvaluationService from '../services/EvaluationService'
 import ConfirmacaoPopup from './ConfirmacaoPopup'
 
 import {
@@ -15,9 +15,9 @@ import {
   TableRowColumn
 } from 'material-ui/Table'
 
-const avaliacoesService = new AvaliacoesService()
+const avaliacoesService = new EvaluationService()
 
-export default class AvaliacoesView extends React.Component {
+export default class EvaluationsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -105,7 +105,7 @@ export default class AvaliacoesView extends React.Component {
             multiSelectable={false}
             setSelectedRows={this.state.selected}
           >
-            <TableHeader enableSelectAll={true} displaySelectAll={true}>
+            <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn>Título</TableHeaderColumn>
                 <TableHeaderColumn>Data de início</TableHeaderColumn>
@@ -113,8 +113,8 @@ export default class AvaliacoesView extends React.Component {
                 <TableHeaderColumn>Status</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody showRowHover={true} deselectOnClickaway={false}>
-              {this.state.evaluations.map((evaluation, index) => (
+            <TableBody showRowHover={true} deselectOnClickaway={false} displayRowCheckbox={false}>
+              {this.state.evaluations && this.state.evaluations.map((evaluation, index) => (
                 <TableRow
                   key={index}
                   selected={this.state.selected.indexOf(index) !== -1}

@@ -98,15 +98,14 @@ export default class UserListView extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody showRowHover={true} deselectOnClickaway={false}>
-            {
-              this.state.users.map((user, index) =>
-                <TableRow key={index} selected={this.state.selected.indexOf(index) !== -1} >
-                  <TableRowColumn>{user.username}</TableRowColumn>
-                  <TableRowColumn>{user.role}</TableRowColumn>
-                  <TableRowColumn>{user.incubator.name}</TableRowColumn>
-                  <TableRowColumn>{user.active ? "Ativo" : "Inativo"}</TableRowColumn>
-                </TableRow>
-              )
+            {this.state.users && this.state.users.map((user, index) =>
+              <TableRow key={index} selected={this.state.selected.indexOf(index) !== -1} >
+                <TableRowColumn>{user.username}</TableRowColumn>
+                <TableRowColumn>{user.role}</TableRowColumn>
+                <TableRowColumn>{user.incubator.name}</TableRowColumn>
+                <TableRowColumn>{user.active ? "Ativo" : "Inativo"}</TableRowColumn>
+              </TableRow>
+            )
             }
           </TableBody>
         </Table>

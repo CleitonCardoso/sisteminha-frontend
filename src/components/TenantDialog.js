@@ -19,7 +19,9 @@ export default class TenantDialog extends React.Component {
     this.handleClose = this.handleClose.bind(this)
     this.state = {
       open: false,
-      tenant: {}
+      tenant: {
+        maturityLevel: 'PROJECT'
+      }
     }
   }
 
@@ -28,7 +30,6 @@ export default class TenantDialog extends React.Component {
   };
 
   handleClose = (event) => {
-    this.props.handler();
     this.setState({ open: false, tenant: {} });
   };
 
@@ -37,6 +38,7 @@ export default class TenantDialog extends React.Component {
     tenantService.save(response => {
       if (response.status === 200) {
         this.handleClose()
+        this.props.handler(response.data)
       }
     }, this.state.tenant)
   };
@@ -95,13 +97,13 @@ export default class TenantDialog extends React.Component {
             fullWidth={true}
             onChange={this.setValue}
             id="companyOwner"
-          />
+          /><br />
           <TextField
             floatingLabelText="Telefone"
             fullWidth={true}
             onChange={this.setValue}
             id="phone"
-          />
+          /><br />
           Nível de maturidade
           <DropDownMenu value={this.state.tenant.maturityLevel || 'PROJECT'} onChange={this.setMaturityLevel}>
             <MenuItem value={'PROJECT'} primaryText="Projeto" />

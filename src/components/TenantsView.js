@@ -6,11 +6,11 @@ import Paper from 'material-ui/Paper'
 import TenantDialog from './TenantDialog'
 import TenantService from '../services/TenantService'
 
-import EmpresasBox from './EmpresasBox'
+import TenantBox from './TenantBox'
 
 const tenantService = new TenantService()
 
-export default class EmpresasView extends React.Component {
+export default class TenantsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -32,6 +32,10 @@ export default class EmpresasView extends React.Component {
     })
   }
 
+  openNewTenant = (tenant) => {
+    this.props.history.push('/empresas/' + tenant.id)
+  }
+
   componentDidMount = () => {
     this.reloadGrid()
   }
@@ -39,7 +43,7 @@ export default class EmpresasView extends React.Component {
   render() {
     return (
       <div>
-        <TenantDialog ref="myDialog" handler={this.reloadGrid} />
+        <TenantDialog ref="myDialog" handler={this.openNewTenant} />
         <Paper zDepth={1}>
           <div style={buttons}>
             <br />
@@ -52,7 +56,7 @@ export default class EmpresasView extends React.Component {
             <br />
           </div>
           <GridList cols={4} cellHeight={'auto'}>
-            {this.state.tenants.map(tenant => <EmpresasBox tenant={tenant} />)}
+            {this.state.tenants.map(tenant => <TenantBox tenant={tenant} />)}
           </GridList>
         </Paper>
       </div>

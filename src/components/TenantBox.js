@@ -34,7 +34,7 @@ const phases = {
   }
 }
 
-export default class EmpresasBox extends React.Component {
+export default class TenantBox extends React.Component {
   constructor(props) {
     console.log(props)
     super(props)

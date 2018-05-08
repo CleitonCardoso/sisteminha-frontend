@@ -6,10 +6,10 @@ import { withRouter } from 'react-router-dom'
 
 import { Route } from 'react-router-dom'
 
-import EmpresasView from './EmpresasView'
-import AvaliacoesView from './AvaliacoesView'
-import EmpresaDetails from './EmpresaDetails'
-import AvaliacaoDetails from './AvaliacaoDetails'
+import TenantsView from './TenantsView'
+import EvaluationsView from './EvaluationsView'
+import TenantDetails from './TenantDetails'
+import EvaluationDetails from './EvaluationDetails'
 import ConfigurationsView from './ConfigurationsView'
 
 import LeftMenu from './LeftMenu'
@@ -33,12 +33,12 @@ class HomeView extends React.Component {
           </nav>
           <main>
             <div> 
-              <Route exact path="/" component={EmpresasView} />
-              <Route exact path="/empresas" component={EmpresasView} />
-              <Route exact path="/avaliacoes" component={AvaliacoesView} />
-              <Route exact path="/empresas/:id" component={EmpresaDetails} />
-              <Route exact path="/avaliacao/:id" component={AvaliacaoDetails} />
-              <Route exact path="/avaliacao/" component={AvaliacaoDetails} />
+              <Route exact path="/" component={TenantsView} />
+              <Route exact path="/empresas" component={TenantsView} />
+              <Route exact path="/avaliacoes" component={EvaluationsView} />
+              <Route exact path="/empresas/:id" component={TenantDetails} />
+              <Route exact path="/avaliacao/:id" component={EvaluationDetails} />
+              <Route exact path="/avaliacao/" component={EvaluationDetails} />
               <Route exact path="/configuracoes/" component={ConfigurationsView} />
             </div>
           </main>
