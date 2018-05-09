@@ -15,7 +15,7 @@ import {
   TableRowColumn
 } from 'material-ui/Table'
 
-const avaliacoesService = new EvaluationService()
+const evaluationService = new EvaluationService()
 
 export default class EvaluationsView extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class EvaluationsView extends React.Component {
   }
 
   removeItem = () => {
-    avaliacoesService.remove(response => {
+    evaluationService.remove(response => {
       if (response.status === 200) {
         this.reloadList()
       }
@@ -59,7 +59,7 @@ export default class EvaluationsView extends React.Component {
   }
 
   reloadList = () => {
-    avaliacoesService.listAll(response => {
+    evaluationService.listAll(response => {
       if (response.status === 200) {
         this.setState({
           selected: [],
@@ -105,7 +105,7 @@ export default class EvaluationsView extends React.Component {
             multiSelectable={false}
             setSelectedRows={this.state.selected}
           >
-            <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={false}>
+            <TableHeader enableSelectAll={false} displaySelectAll={false} adjustForCheckbox={true}>
               <TableRow>
                 <TableHeaderColumn>Título</TableHeaderColumn>
                 <TableHeaderColumn>Data de início</TableHeaderColumn>
@@ -113,7 +113,7 @@ export default class EvaluationsView extends React.Component {
                 <TableHeaderColumn>Status</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody showRowHover={true} deselectOnClickaway={false} displayRowCheckbox={false}>
+            <TableBody showRowHover={true} deselectOnClickaway={false} displayRowCheckbox={true}>
               {this.state.evaluations && this.state.evaluations.map((evaluation, index) => (
                 <TableRow
                   key={index}

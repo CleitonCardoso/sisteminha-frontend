@@ -88,7 +88,7 @@ export default class EvaluationDetails extends React.Component {
   handleStartingDate = (event, date) => {
     var evaluation = this.state.evaluation
     evaluation.startingDate = date
-    this.state({
+    this.setState({
       evaluation: evaluation
     })
   }

@@ -20,7 +20,8 @@ export default class TenantDialog extends React.Component {
     this.state = {
       open: false,
       tenant: {
-        maturityLevel: 'PROJECT'
+        maturityLevel: 'PROJECT',
+        score: 0
       }
     }
   }

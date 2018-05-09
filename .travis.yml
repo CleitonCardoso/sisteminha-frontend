@@ -5,6 +5,6 @@ deploy:
   provider: heroku
   api_key:
     secure: bNGt4gZ0MQ2GJAlnsQJ08EP3rPDnHGMXibM8cl4lDvF1+nGnF0Rwht7qNnpzyfpwmiCp6kdC2Zdj+sUlTA4F7njXqGxtFKkgC43PZvJqAdT0RgWqRsTMU3Us4ChOO9fH3SzAKDizu3L1s58Rv+1VIWIxfCdtkRAJfBrIfQEv08JI4fG5MKEVzXvZ3rMTUal8gXKxskrDO5wted5juOn/tphctVutd+VKjbhcDftJDcYWnJgVYErprlatX5ZCnfWQTja8/3yXLww1+fouD8ape4myjtUh8pYHNRrAbmM2/Hzlg+4sJG5/Xf/lpKH8qIv7lM22dfv6Lxm4Dga3WDmYE7/ZIEB/mtkrbV5ICPzuCYBBO9nrJSvMwC+3C5OfPDbhpwDLx9gw7+a+S08b33ExxvuqZ9SHrv4v+IloJyDs0yxJ0/egbNm0EgC5MAnUJ0f3q16luVqHnkWFme/SZUwrPF2UKcLJQ0KkoDRG+/MuLGfekPs3lvS7bmqojbgTvzC9FGLZpjX3geTzDu9vJ1mD9wLJm403QyXabbF7kBxDL3Fk+cHUEKXFId+VsbA1MhHR64i1dZAGQANYf41muapx0mg9YqYva4fWKgRbGnRgbXpYV1cYTNTVLdSl48juwS8XL8+AQYP/izS2TFBxZMWPGsnhfPckfxPu15pHS0o94K8=
-  app: radiant-shelf-54291
+  app: sisteminha
   on:
     repo: CleitonCardoso/sisteminha-frontend

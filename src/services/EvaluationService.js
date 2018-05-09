@@ -29,6 +29,8 @@ export default class EvaluationsService {
       })
   }
 
+
+
   remove = (callback, evaluation) => {
     var credentials = cookies.get('credentials')
     axios({
@@ -76,6 +78,50 @@ export default class EvaluationsService {
     axios({
       method: 'post',
       url: serverUrl + '/evaluation',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      },
+      data: evaluation
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  listAllForTenant = (callback, tenant) => {
+    var credentials = cookies.get('credentials')
+
+    axios({
+      method: 'get',
+      url: serverUrl + '/tenant/' + tenant + '/evaluations',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      }
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  addTenantInEvaluation = (callback, tenant, evaluation) => {
+    var credentials = cookies.get('credentials')
+    axios({
+      method: 'post',
+      url: serverUrl + '/tenant/' + tenant + '/evaluation/' + evaluation.id,
       headers: {
         'Content-Type': 'application/json'
       },
