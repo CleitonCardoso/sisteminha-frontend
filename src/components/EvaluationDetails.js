@@ -110,7 +110,6 @@ export default class EvaluationDetails extends React.Component {
   }
 
   handleSave = () => {
-    console.log(this.state.evaluation)
     avaliacoesService.save(response => {
       if (response.status === 200) {
         this.props.history.push('/avaliacoes')

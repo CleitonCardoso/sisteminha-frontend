@@ -5,6 +5,7 @@ import Moment from 'moment'
 
 import EvaluationService from '../services/EvaluationService'
 import ConfirmacaoPopup from './ConfirmacaoPopup'
+import EvaluationDialog from './EvaluationDialog'
 
 import {
   Table,
@@ -28,7 +29,8 @@ export default class EvaluationsView extends React.Component {
 
   addItem = e => {
     e.preventDefault()
-    this.props.history.push('/avaliacao/#')
+    this.refs.evaluationDialog.handleOpen()
+    // this.props.history.push('/avaliacao/#')
   }
 
   viewItem = e => {
@@ -39,6 +41,14 @@ export default class EvaluationsView extends React.Component {
   confirmExclusion = e => {
     e.preventDefault()
     this.refs.confirmation.handleOpen()
+  }
+
+  handleSave = (evaluation) => {
+    evaluationService.save(response => {
+      if (response.status === 200) {
+        this.props.history.push('/avaliacao/' + response.data.id)
+      }
+    }, evaluation)
   }
 
   removeItem = () => {
@@ -80,6 +90,7 @@ export default class EvaluationsView extends React.Component {
   render() {
     return (
       <div>
+        <EvaluationDialog ref="evaluationDialog" save={this.handleSave} />
         <ConfirmacaoPopup ref="confirmation" confirm={this.removeItem} />
         <Paper zDepth={1}>
           <div style={buttons}>
