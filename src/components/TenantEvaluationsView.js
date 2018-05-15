@@ -18,45 +18,19 @@ import {
 
 const evaluationService = new EvaluationService()
 
-export default class EvaluationsView extends React.Component {
+export default class TenantEvaluationsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       selected: [],
-      evaluations: []
+      evaluationResponses: []
     }
   }
 
-  addItem = e => {
-    e.preventDefault()
-    this.refs.evaluationDialog.handleOpen()
-    // this.props.history.push('/avaliacao/#')
-  }
 
   viewItem = e => {
     e.preventDefault()
-    this.props.history.push('/INCUBATOR/avaliacao/' + this.getSelected().id)
-  }
-
-  confirmExclusion = e => {
-    e.preventDefault()
-    this.refs.confirmation.handleOpen()
-  }
-
-  handleSave = (evaluation) => {
-    evaluationService.save(response => {
-      if (response.status === 200) {
-        this.props.history.push('/INCUBATOR/avaliacao/' + response.data.id)
-      }
-    }, evaluation)
-  }
-
-  removeItem = () => {
-    evaluationService.remove(response => {
-      if (response.status === 200) {
-        this.reloadList()
-      }
-    }, this.getSelected())
+    this.props.history.push('/TENANT/avaliacao/' + this.getSelected().id)
   }
 
   handleRowSelection = selectedRows => {
@@ -69,11 +43,11 @@ export default class EvaluationsView extends React.Component {
   }
 
   reloadList = () => {
-    evaluationService.listAll(response => {
+    evaluationService.listAllForCurrentTenant(response => {
       if (response.status === 200) {
         this.setState({
           selected: [],
-          evaluations: response.data
+          evaluationResponses: response.data
         })
       }
     })
@@ -84,30 +58,21 @@ export default class EvaluationsView extends React.Component {
   }
 
   getSelected = () => {
-    return this.state.evaluations[this.state.selected]
+    return this.state.evaluationResponses[this.state.selected]
   }
 
   render() {
     return (
       <div>
-        <EvaluationDialog ref="evaluationDialog" save={this.handleSave} />
-        <ConfirmacaoPopup ref="confirmation" confirm={this.removeItem} />
         <Paper zDepth={1}>
           <div style={buttons}>
             <br />
             <RaisedButton
-              label={this.getSelected() ? 'Editar' : 'Nova avaliação'}
+              label={'Responder Avaliação'}
               primary
               style={btn}
-              onClick={this.getSelected() ? this.viewItem : this.addItem}
-              disabled={this.state.selected.length > 1}
-            />
-            <RaisedButton
-              label="Excluir"
-              secondary
-              style={btn}
+              onClick={this.viewItem}
               disabled={this.state.selected.length === 0}
-              onClick={this.confirmExclusion}
             />
             <br />
           </div>
@@ -125,19 +90,19 @@ export default class EvaluationsView extends React.Component {
               </TableRow>
             </TableHeader>
             <TableBody showRowHover={true} deselectOnClickaway={false} displayRowCheckbox={true}>
-              {this.state.evaluations && this.state.evaluations.map((evaluation, index) => (
+              {this.state.evaluationResponses && this.state.evaluationResponses.map((evaluationResponse, index) => (
                 <TableRow
                   key={index}
                   selected={this.state.selected.indexOf(index) !== -1}
                 >
-                  <TableRowColumn>{evaluation.title}</TableRowColumn>
+                  <TableRowColumn>{evaluationResponse.evaluation.title}</TableRowColumn>
                   <TableRowColumn>
-                    {Moment(evaluation.startingDate).format('DD/MM/YYYY')}
+                    {Moment(evaluationResponse.evaluation.startingDate).format('DD/MM/YYYY')}
                   </TableRowColumn>
                   <TableRowColumn>
-                    {Moment(evaluation.endingDate).format('DD/MM/YYYY')}
+                    {Moment(evaluationResponse.evaluation.endingDate).format('DD/MM/YYYY')}
                   </TableRowColumn>
-                  <TableRowColumn>{evaluation.status}</TableRowColumn>
+                  <TableRowColumn>{evaluationResponse.finished ? 'Finalizada' : 'Pendente'}  </TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>

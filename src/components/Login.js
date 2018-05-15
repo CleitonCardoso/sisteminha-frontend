@@ -43,6 +43,7 @@ class Login extends Component {
     axios({
       method: 'post',
       url: serverUrl + '/login',
+      withCredentials: true,
       data: data,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,7 +54,8 @@ class Login extends Component {
           'credentials',
           {
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            role: res.headers['role']
           },
           { path: '/' }
         )

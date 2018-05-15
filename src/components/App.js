@@ -24,7 +24,15 @@ class App extends React.Component {
   }
 
   routeToInitialState = () => {
-    this.props.history.push('/', { state: {} })
+    var credentials = cookies.get('credentials')
+    this.props.history.push('/' + credentials.role + '/', { state: {} })
+  }
+
+  componentWillMount = () => {
+    var credentials = cookies.get('credentials')
+    if (credentials) {
+      this.props.history.push('/' + credentials.role + '/', { state: {} })
+    }
   }
 
   toLogin = () => {
@@ -48,11 +56,11 @@ class App extends React.Component {
       }
     })
       .then(res => {
-        cookies.remove('credentials')
+        cookies.remove('credentials', { path: '/' })
         this.setState({
           isLogged: false
         })
-        this.routeToInitialState()
+        this.forceUpdate();
       })
       .catch(error => {
         console.log(error)

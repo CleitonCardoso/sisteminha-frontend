@@ -117,6 +117,28 @@ export default class EvaluationsService {
       })
   }
 
+  listAllForCurrentTenant = (callback) => {
+    var credentials = cookies.get('credentials')
+
+    axios({
+      method: 'get',
+      url: serverUrl + '/tenant/evaluations',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      }
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   addTenantInEvaluation = (callback, tenant, evaluation) => {
     var credentials = cookies.get('credentials')
     axios({

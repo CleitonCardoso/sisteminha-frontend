@@ -3,6 +3,7 @@ import React from 'react'
 import TextField from 'material-ui/TextField'
 import { Card } from 'material-ui/Card'
 import { GridList } from 'material-ui/GridList'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton'
@@ -22,7 +23,8 @@ export default class AxisView extends React.Component {
     super(props)
     this.state = {
       mainQuestion: {
-        axis: this.props.type
+        axis: this.props.type,
+        alternatives: []
       },
       questions: []
     }
@@ -68,6 +70,29 @@ export default class AxisView extends React.Component {
     })
   }
 
+  addAlternative = (event) => {
+    if (event.key === 'Enter') {
+      var mainQuestion = this.state.mainQuestion;
+      mainQuestion.alternatives.push({ content: mainQuestion.alternative, rightAnswer: false });
+      mainQuestion.alternative = '';
+      this.setState({
+        mainQuestion: mainQuestion
+      })
+    }
+  }
+
+  setAlternativeAsRight = (event, value) => {
+    var mainQuestion = this.state.mainQuestion;
+    var alternative = mainQuestion.alternatives[value];
+
+    alternative.rightAnswer = true;
+    mainQuestion.alternatives[value] = alternative;
+
+    this.setState({
+      mainQuestion: mainQuestion
+    })
+  }
+
   render() {
     return (
       <div>
@@ -93,6 +118,37 @@ export default class AxisView extends React.Component {
                 onChange={this.handleFieldChange.bind(this, 'content')}
                 floatingLabelText="Pergunta"
               />
+              <br />
+              <br />
+              <br />
+              <TextField
+                ref="alternative"
+                value={this.state.mainQuestion.alternative}
+                fullWidth={true}
+                onChange={this.handleFieldChange.bind(this, 'alternative')}
+                floatingLabelText="Alternativa..."
+                onKeyPress={this.addAlternative.bind(this)}
+              />
+              <br />
+              <br />
+              <RadioButtonGroup name="alternatives" onChange={this.setAlternativeAsRight.bind(this)}>
+                {this.state.mainQuestion && this.state.mainQuestion.alternatives.map((alternative, index) => (
+                  <RadioButton
+                    value={index}
+                    label={alternative.content}
+                    key={index}
+                    style={{
+                      block: {
+                        maxWidth: 250,
+                      },
+                      radioButton: {
+                        marginBottom: 16,
+                      },
+                    }}
+                  />
+                ))}
+              </RadioButtonGroup>
+              <br />
               <Toolbar>
                 <ToolbarGroup firstChild={true} />
                 <ToolbarGroup>

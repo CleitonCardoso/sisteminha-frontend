@@ -59,7 +59,7 @@ export default class TenantBox extends React.Component {
           />
           <CardText>{phases[this.props.tenant.maturityLevel].title}</CardText>
           <CardActions>
-            <Link to={'/empresas/' + this.props.tenant.id}>
+            <Link to={'/INCUBATOR/empresas/' + this.props.tenant.id}>
               <RaisedButton label="Visualizar" fullWidth={true} />
             </Link>
           </CardActions>

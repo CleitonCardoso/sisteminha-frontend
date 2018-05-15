@@ -8,7 +8,7 @@ import Settings from 'material-ui/svg-icons/action/settings'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 
-class LeftMenu extends React.Component {
+class TenantLeftMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = props.location.state
@@ -21,20 +21,14 @@ class LeftMenu extends React.Component {
           <Menu>
             <MenuItem
               style={itemButton}
-              primaryText="Incubadas"
-              containerElement={<NavLink to="/INCUBATOR/empresas" />}
-              leftIcon={<BusinessCenter />}
-            />
-            <MenuItem
-              style={itemButton}
               primaryText="Avaliações"
-              containerElement={<NavLink to="/INCUBATOR/avaliacoes" />}
+              containerElement={<NavLink to="/TENANT/avaliacoes" />}
               leftIcon={<ContentPaste />}
             />
             <MenuItem
               style={itemButton}
               primaryText="Configurações"
-              containerElement={<NavLink to="/INCUBATOR/configuracoes" />}
+              containerElement={<NavLink to="/TENANT/configuracoes" />}
               leftIcon={<Settings />}
             />
           </Menu>
@@ -44,7 +38,7 @@ class LeftMenu extends React.Component {
   }
 }
 
-export default withRouter(LeftMenu)
+export default withRouter(TenantLeftMenu)
 
 const itemButton = {
   width: '14.4em'

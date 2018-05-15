@@ -33,7 +33,7 @@ export default class TenantsView extends React.Component {
   }
 
   openNewTenant = (tenant) => {
-    this.props.history.push('/empresas/' + tenant.id)
+    this.props.history.push('/INCUBATOR/empresas/' + tenant.id)
   }
 
   componentDidMount = () => {
@@ -56,7 +56,7 @@ export default class TenantsView extends React.Component {
             <br />
           </div>
           <GridList cols={4} cellHeight={'auto'}>
-            {this.state.tenants.map(tenant => <TenantBox tenant={tenant} />)}
+            {this.state.tenants.map((tenant, index) => <TenantBox tenant={tenant} key={index} />)}
           </GridList>
         </Paper>
       </div>
