@@ -30,6 +30,7 @@ export default class QuestionsService {
   }
 
   save = (callback, evaluation, question) => {
+    console.log(question)
     var credentials = cookies.get('credentials')
 
     axios({

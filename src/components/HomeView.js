@@ -15,6 +15,7 @@ import IncubatorConfigurationsView from './ConfigurationsView'
 import TenantConfigurationsView from './TenantConfigurationsView'
 
 import TenantEvaluationsView from './TenantEvaluationsView'
+import EvaluationResponseView from './EvaluationResponseView'
 
 import LeftMenu from './LeftMenu'
 
@@ -58,6 +59,7 @@ class HomeView extends React.Component {
             <div>
               <Route exact path="/TENANT/" component={TenantEvaluationsView} />
               <Route exact path="/TENANT/avaliacoes" component={TenantEvaluationsView} />
+              <Route exact path="/TENANT/avaliacao/:id" component={EvaluationResponseView} />
               <Route exact path="/TENANT/configuracoes" component={TenantConfigurationsView} />
             </div>
           </main>

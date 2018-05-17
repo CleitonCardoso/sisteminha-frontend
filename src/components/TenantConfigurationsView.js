@@ -3,6 +3,8 @@ import React from 'react'
 import Paper from 'material-ui/Paper'
 import { GridList } from 'material-ui/GridList'
 import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 import IncubatorService from '../services/IncubatorService'
 
@@ -49,7 +51,30 @@ export default class TenantConfigurationsView extends React.Component {
         <br />
         <Paper zDepth={1} style={paper}>
           <h1>Configuração de login</h1>
-          <div>A fazer: adicionar formulário de alteração de login e senha</div>
+          <TextField
+            floatingLabelText="Email"
+            onChange={this.setValue}
+            id="email"
+          /><br />
+          <TextField
+            ref="password"
+            type="password"
+            hintText="Admin"
+            floatingLabelText="Senha"
+            onChange={(event, newValue) =>
+              this.setState({ password: newValue })
+            }
+            onKeyPress={event => {
+              if (event.key === 'Enter') {
+                this.login()
+              }
+            }}
+          />
+          <FlatButton
+            label="Salvar"
+            primary={true}
+            keyboardFocused={true}
+            onClick={this.handleSave} />
         </Paper>
       </div>
     )

@@ -41,8 +41,10 @@ export default class AxisView extends React.Component {
         response => {
           this.setState({
             mainQuestion: {
-              axis: this.props.type
-            }
+              axis: this.props.type,
+              alternatives: []
+            },
+            questions: []
           })
           this.props.success()
         },
@@ -132,7 +134,7 @@ export default class AxisView extends React.Component {
               <br />
               <br />
               <RadioButtonGroup name="alternatives" onChange={this.setAlternativeAsRight.bind(this)}>
-                {this.state.mainQuestion && this.state.mainQuestion.alternatives.map((alternative, index) => (
+                {this.state.mainQuestion.alternatives && this.state.mainQuestion.alternatives.map((alternative, index) => (
                   <RadioButton
                     value={index}
                     label={alternative.content}
@@ -171,17 +173,34 @@ export default class AxisView extends React.Component {
                     }
                     onChange={this.handleChangeSingle}
                     value={this.state.valueSingle}
-                    style={{ float: 'right' }}
-                  >
+                    style={{ float: 'right' }}>
                     <MenuItem value="1" primaryText="Editar" />
                     <MenuItem
                       value="2"
-                      primaryText="Excluir"
-                      onClick={this.delete.bind(this, question)}
+                      primaryText="Excluir" onClick={this.delete.bind(this, question)}
                     />
                   </IconMenu>
                   <h1>{question.title} </h1>
                   <p>{question.content} </p>
+                  <RadioButtonGroup name="alternatives">
+                    {question.alternatives && question.alternatives.map((alternative, index) => (
+                      <RadioButton
+                        value={index}
+                        label={alternative.content}
+                        checked={alternative.rightAnswer}
+                        disabled={true}
+                        key={index}
+                        style={{
+                          block: {
+                            maxWidth: 250,
+                          },
+                          radioButton: {
+                            marginBottom: 16,
+                          },
+                        }}
+                      />
+                    ))}
+                  </RadioButtonGroup>
                 </Card>
               ))}
           </div>
