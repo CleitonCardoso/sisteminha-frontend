@@ -33,52 +33,35 @@ export default class EvaluationResponseView extends React.Component {
     }
 
     componentWillMount = () => {
-        evaluationService.listAllForCurrentTenant(response => {
+        evaluationService.getResponse(response => {
             if (response.status == 200) {
-                this.setState({ evaluationResponse: response.data })
+                this.setState({
+                    evaluationResponse: response.data,
+                    stepIndex: 0,
+                    questionsSize: response.data.evaluation.questions.length,
+                    finished: false
+                })
             }
-        })
+        }, this.state.evaluation)
     }
 
     handleNext = () => {
-        const { stepIndex } = this.state
+        var stepIndex = this.state.stepIndex
         this.setState({
             stepIndex: stepIndex + 1,
-            finished: stepIndex >= 2,
+            finished: stepIndex >= this.state.questionsSize - 1,
         })
     }
 
     handlePrev = () => {
-        const { stepIndex } = this.state
+        var stepIndex = this.state.stepIndex
         if (stepIndex > 0) {
             this.setState({ stepIndex: stepIndex - 1 })
         }
     }
 
-    renderStepActions(step) {
-        const { stepIndex } = this.state
-
-        return (
-            <div style={{ margin: '12px 0' }}>
-                <RaisedButton
-                    label={stepIndex === 2 ? 'Finalizar' : 'Próxima'}
-                    disableTouchRipple={true}
-                    disableFocusRipple={true}
-                    primary={true}
-                    onClick={this.handleNext}
-                    style={{ marginRight: 12 }}
-                />
-                {step > 0 && (
-                    <FlatButton
-                        label="Anterior"
-                        disabled={stepIndex === 0}
-                        disableTouchRipple={true}
-                        disableFocusRipple={true}
-                        onClick={this.handlePrev}
-                    />
-                )}
-            </div>
-        )
+    setAlternativeAsRight = (event, value) => {
+        console.log(value)
     }
 
     render() {
@@ -88,45 +71,57 @@ export default class EvaluationResponseView extends React.Component {
             <Paper zDepth={1} style={paper}>
                 {/* <div style={{ maxWidth: 380, maxHeight: 400 }}> */}
                 <Stepper activeStep={stepIndex} orientation="vertical">
-                    {this.state.evaluationResponse && this.state.evaluationResponse.evaluation.map((question, index) => (
-                        <Step>
-                            <StepLabel>{question.title}</StepLabel>
-                            <StepLabel>{question.content}</StepLabel>
-                            <StepContent>
-                                <RadioButtonGroup name="alternatives" onChange={true}>
-                                    {question.alternatives && question.alternatives.map((alternative, index) => (
-                                        <RadioButton
-                                            value={index}
-                                            label={alternative.content}
-                                            key={index}
-                                            style={{
-                                                block: {
-                                                    maxWidth: 250,
-                                                },
-                                                radioButton: {
-                                                    marginBottom: 16,
-                                                },
-                                            }}
+                    {this.state.evaluationResponse &&
+                        this.state.evaluationResponse.evaluation &&
+                        this.state.evaluationResponse.evaluation.questions.map((question, index) => (
+                            <Step>
+                                <StepLabel>{question.title}</StepLabel>
+                                <StepContent>
+                                    <h3>{question.content}</h3>
+                                    <RadioButtonGroup name="alternatives" onChange={this.setAlternativeAsRight.bind(this)} >
+                                        {question.alternatives && question.alternatives.map((alternative, index) => (
+                                            <RadioButton
+                                                value={index}
+                                                label={alternative.content}
+                                                key={index}
+                                                style={{
+                                                    marginTop: 20,
+                                                    marginBottom: 20
+                                                }}
+                                            />
+                                        ))}
+                                    </RadioButtonGroup>
+                                    <div style={{ margin: '12px 0' }}>
+                                        {index > 0 && (
+                                            <FlatButton
+                                                label="Anterior"
+                                                disabled={stepIndex === 0}
+                                                disableTouchRipple={true}
+                                                disableFocusRipple={true}
+                                                onClick={this.handlePrev}
+                                                style={{ marginRight: 12 }}
+                                            />
+                                        )}
+                                        <RaisedButton
+                                            label={stepIndex === this.state.questionsSize - 1 ? 'Finalizar' : 'Próxima'}
+                                            disableTouchRipple={true}
+                                            disableFocusRipple={true}
+                                            disabled={false}
+                                            primary={true}
+                                            onClick={this.handleNext}
                                         />
-                                    ))}
-                                </RadioButtonGroup>
-                                {this.renderStepActions(0)}
-                            </StepContent>
-                        </Step>
-                    ))}
+                                    </div>
+                                </StepContent>
+                            </Step>
+                        ))}
                 </Stepper>
                 {finished && (
                     <p style={{ margin: '20px 0', textAlign: 'center' }}>
-                        <a
-                            href="#"
-                            onClick={(event) => {
-                                event.preventDefault()
-                                this.setState({ stepIndex: 0, finished: false })
-                            }}
-                        >
-                            Click here
-            </a> to reset the example.
-          </p>
+                        <a href="#" onClick={(event) => {
+                            event.preventDefault()
+                            this.setState({ stepIndex: 0, finished: false })
+                        }}>Clique aqui</a> se quiser revisar suas respostas.
+                    </p>
                 )}
                 {/* </div> */}
             </Paper>
