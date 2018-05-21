@@ -102,7 +102,8 @@ export default class EvaluationResponseView extends React.Component {
             ENTREPRENEUR: 0, TECHNOLOGY: 0, MARKET: 0, CAPITAL: 0, MANAGEMENT: 0
         }
         this.state.evaluationResponse.evaluation.questions.forEach(question => {
-
+            mediums[question.activeStep3
+            ]
         })
 
         if (this.state.evaluation.questions) {
