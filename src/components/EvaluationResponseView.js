@@ -16,7 +16,13 @@ import EvaluationService from '../services/EvaluationService'
 
 const evaluationService = new EvaluationService()
 
-
+const data = [
+    { axis: 'Empreendedor', value: 5, fullMark: 10 },
+    { axis: 'Tecnologia', value: 8, fullMark: 10 },
+    { axis: 'Mercado', value: 5, fullMark: 10 },
+    { axis: 'Capital', value: 2, fullMark: 10 },
+    { axis: 'Gestão', value: 3, fullMark: 10 },
+]
 
 
 export default class EvaluationResponseView extends React.Component {
@@ -90,27 +96,19 @@ export default class EvaluationResponseView extends React.Component {
     }
 
     getEvaluationPreview = () => {
-        const data = [
-            { axis: 'Empreendedor', value: 5, fullMark: 10 },
-            { axis: 'Tecnologia', value: 8, fullMark: 10 },
-            { axis: 'Mercado', value: 5, fullMark: 10 },
-            { axis: 'Capital', value: 2, fullMark: 10 },
-            { axis: 'Gestão', value: 3, fullMark: 10 },
-        ]
 
         var mediums = {
             ENTREPRENEUR: 0, TECHNOLOGY: 0, MARKET: 0, CAPITAL: 0, MANAGEMENT: 0
         }
-        this.state.evaluationResponse.evaluation.questions.forEach(question => {
-            mediums[question.activeStep3
-            ]
-        })
+        // this.state.evaluationResponse.evaluation.questions.forEach(question => {
 
-        if (this.state.evaluation.questions) {
-            return this.state.evaluation.questions.filter(question => {
-                return question.axis === axisType
-            })
-        }
+        // })
+
+        // if (this.state.evaluation.questions) {
+        //     return this.state.evaluation.questions.filter(question => {
+        //         return question.axis === axisType
+        //     })
+        // }
 
         const medium = (data) => {
             var media = 0
@@ -202,7 +200,7 @@ export default class EvaluationResponseView extends React.Component {
                                 <PolarRadiusAxis />
                                 <Radar name="evaluationResults" dataKey="value" stroke="#00BCD4" fill="#00BCD4" fillOpacity={0.6} />
                             </RadarChart>
-                            <h1 style={{ position: 'relative', top: '50%' }}>Média Geral: {medium()}</h1>
+                            <h1 style={{ position: 'relative', top: '50%' }}>Média Geral: {this.medium()}</h1>
                         </GridList>
                         <a href="#" onClick={(event) => {
                             event.preventDefault()
