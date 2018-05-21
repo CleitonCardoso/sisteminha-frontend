@@ -121,15 +121,14 @@ export default class EvaluationsView extends React.Component {
                 <TableHeaderColumn>Título</TableHeaderColumn>
                 <TableHeaderColumn>Data de início</TableHeaderColumn>
                 <TableHeaderColumn>Data de finalização</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>Situação</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody showRowHover={true} deselectOnClickaway={false} displayRowCheckbox={true}>
               {this.state.evaluations && this.state.evaluations.map((evaluation, index) => (
                 <TableRow
                   key={index}
-                  selected={this.state.selected.indexOf(index) !== -1}
-                >
+                  selected={this.state.selected.indexOf(index) !== -1}>
                   <TableRowColumn>{evaluation.title}</TableRowColumn>
                   <TableRowColumn>
                     {Moment(evaluation.startingDate).format('DD/MM/YYYY')}
@@ -137,7 +136,7 @@ export default class EvaluationsView extends React.Component {
                   <TableRowColumn>
                     {Moment(evaluation.endingDate).format('DD/MM/YYYY')}
                   </TableRowColumn>
-                  <TableRowColumn>{evaluation.status}</TableRowColumn>
+                  <TableRowColumn>{evaluation.status == 'CLOSED' ? 'Fechada' : 'Em aberto'}</TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>

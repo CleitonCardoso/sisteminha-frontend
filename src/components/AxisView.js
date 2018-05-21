@@ -13,8 +13,9 @@ import QuestionsService from '../services/QuestionsService'
 import FlatButton from 'material-ui/FlatButton'
 import ExpandMore from 'material-ui/svg-icons/navigation/expand-more'
 import Modal from './Modal'
-
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
+
+
 
 const questionsService = new QuestionsService()
 
@@ -33,7 +34,9 @@ export default class AxisView extends React.Component {
   handleSave = () => {
     if (
       this.state.mainQuestion.title === undefined ||
-      this.state.mainQuestion.content === undefined
+      this.state.mainQuestion.content === undefined ||
+      this.state.mainQuestion.alternatives.length === 0 ||
+      this.getSelectedValue(this.state.mainQuestion) === undefined
     ) {
       this.refs.modal.handleOpen()
     } else {
@@ -42,10 +45,13 @@ export default class AxisView extends React.Component {
           this.setState({
             mainQuestion: {
               axis: this.props.type,
+              title: '',
+              content: '',
               alternatives: []
             },
             questions: []
           })
+          console.log(this.state.mainQuestion)
           this.props.success()
         },
         this.props.evaluation,
@@ -95,12 +101,21 @@ export default class AxisView extends React.Component {
     })
   }
 
+  getSelectedValue = (question) => {
+    var alternatives = question.alternatives;
+    for (var i = 0; i < alternatives.length; i++) {
+      if (alternatives[i].rightAnswer)
+        return i;
+    }
+    return undefined;
+  }
+
   render() {
     return (
       <div>
         <Modal
           ref="modal"
-          title={'Preencha os campos corretamente!'}
+          title={'Preencha Titulo, Conteúdo, Alternativas e marque uma alternativa como correta.'}
           actions={
             <FlatButton label="Ok" primary={true} onClick={this.closeModal} />
           }
@@ -110,13 +125,15 @@ export default class AxisView extends React.Component {
             <Card style={{ margin: 20, padding: 10 }}>
               <TextField
                 ref="title"
-                floatingLabelText="Título"
+                floatingLabelText="Indicador"
+                value={this.state.mainQuestion.title}
                 onChange={this.handleFieldChange.bind(this, 'title')}
               />
               <TextField
                 ref="content"
                 multiLine={true}
                 fullWidth={true}
+                value={this.state.mainQuestion.content}
                 onChange={this.handleFieldChange.bind(this, 'content')}
                 floatingLabelText="Pergunta"
               />
@@ -128,7 +145,7 @@ export default class AxisView extends React.Component {
                 value={this.state.mainQuestion.alternative}
                 fullWidth={true}
                 onChange={this.handleFieldChange.bind(this, 'alternative')}
-                floatingLabelText="Alternativa..."
+                floatingLabelText="Alternativa (Selecione a alternativa correta)"
                 onKeyPress={this.addAlternative.bind(this)}
               />
               <br />
@@ -174,20 +191,16 @@ export default class AxisView extends React.Component {
                     onChange={this.handleChangeSingle}
                     value={this.state.valueSingle}
                     style={{ float: 'right' }}>
-                    <MenuItem value="1" primaryText="Editar" />
-                    <MenuItem
-                      value="2"
-                      primaryText="Excluir" onClick={this.delete.bind(this, question)}
+                    <MenuItem value="1" primaryText="Excluir" onClick={this.delete.bind(this, question)}
                     />
                   </IconMenu>
                   <h1>{question.title} </h1>
                   <p>{question.content} </p>
-                  <RadioButtonGroup name="alternatives">
+                  <RadioButtonGroup name="alternatives" valueSelected={this.getSelectedValue(question)}>
                     {question.alternatives && question.alternatives.map((alternative, index) => (
                       <RadioButton
                         value={index}
                         label={alternative.content}
-                        checked={alternative.rightAnswer}
                         disabled={true}
                         key={index}
                         style={{
@@ -205,7 +218,7 @@ export default class AxisView extends React.Component {
               ))}
           </div>
           <div>
-            <h1>8 Pontos</h1>
+           
           </div>
         </GridList>
         <br />

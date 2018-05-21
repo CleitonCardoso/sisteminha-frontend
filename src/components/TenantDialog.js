@@ -100,7 +100,7 @@ export default class TenantDialog extends React.Component {
             id="companyOwner"
           /><br />
           <TextField
-            floatingLabelText="Email do responsável"
+            floatingLabelText="Email do responsável (login da empresa, senha padrão 1)"
             fullWidth={true}
             onChange={this.setValue}
             id="email"

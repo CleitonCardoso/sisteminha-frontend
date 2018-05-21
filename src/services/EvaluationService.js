@@ -94,6 +94,28 @@ export default class EvaluationsService {
       })
   }
 
+  saveResponse = (callback, evaluationResponse) => {
+    var credentials = cookies.get('credentials')
+    axios({
+      method: 'post',
+      url: serverUrl + '/tenant/evaluation/',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      auth: {
+        username: credentials.username,
+        password: credentials.password
+      },
+      data: evaluationResponse
+    })
+      .then(response => {
+        callback(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   save = (callback, evaluation) => {
     var credentials = cookies.get('credentials')
     axios({

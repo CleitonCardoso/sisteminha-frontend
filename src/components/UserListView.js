@@ -93,7 +93,6 @@ export default class UserListView extends React.Component {
             <TableRow>
               <TableHeaderColumn>Nome de usuário</TableHeaderColumn>
               <TableHeaderColumn>Tipo de usuário</TableHeaderColumn>
-              <TableHeaderColumn>Nome da incubadora</TableHeaderColumn>
               <TableHeaderColumn>Status</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -102,7 +101,6 @@ export default class UserListView extends React.Component {
               <TableRow key={index} selected={this.state.selected.indexOf(index) !== -1} >
                 <TableRowColumn>{user.username}</TableRowColumn>
                 <TableRowColumn>{user.role}</TableRowColumn>
-                <TableRowColumn>{user.incubator.name}</TableRowColumn>
                 <TableRowColumn>{user.active ? "Ativo" : "Inativo"}</TableRowColumn>
               </TableRow>
             )

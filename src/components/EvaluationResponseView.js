@@ -8,12 +8,15 @@ import {
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Paper from 'material-ui/Paper'
-
+import { GridList } from 'material-ui/GridList'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
+import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis } from 'recharts'
 import EvaluationService from '../services/EvaluationService'
 
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 const evaluationService = new EvaluationService()
+
+
 
 
 export default class EvaluationResponseView extends React.Component {
@@ -43,6 +46,15 @@ export default class EvaluationResponseView extends React.Component {
                 })
             }
         }, this.state.evaluation)
+        evaluationService.get
+    }
+
+    saveResponse = () => {
+        evaluationService.saveResponse(response => {
+            if (response.status === 200) {
+                this.handleNext()
+            }
+        }, this.state.evaluationResponse)
     }
 
     handleNext = () => {
@@ -60,75 +72,151 @@ export default class EvaluationResponseView extends React.Component {
         }
     }
 
-    setAlternativeAsRight = (event, value) => {
-        console.log(value)
+    setAlternativeAsRight = (question, event, alternative) => {
+        var evaluationResponse = this.state.evaluationResponse;
+        var selectedAnswer = this.getSelectedValue(undefined, question);
+        if (selectedAnswer) {
+            evaluationResponse.answers.pop(this.getSelectedValue(undefined, question))
+        }
+        evaluationResponse.answers.push({
+            question: {
+                id: question.id,
+            },
+            alternative: alternative
+        })
+        this.setState({
+            evaluationResponse: evaluationResponse
+        })
     }
+
+    getEvaluationPreview = () => {
+        const data = [
+            { axis: 'Empreendedor', value: 5, fullMark: 10 },
+            { axis: 'Tecnologia', value: 8, fullMark: 10 },
+            { axis: 'Mercado', value: 5, fullMark: 10 },
+            { axis: 'Capital', value: 2, fullMark: 10 },
+            { axis: 'Gestão', value: 3, fullMark: 10 },
+        ]
+
+        var mediums = {
+            ENTREPRENEUR: 0, TECHNOLOGY: 0, MARKET: 0, CAPITAL: 0, MANAGEMENT: 0
+        }
+        this.state.evaluationResponse.evaluation.questions.forEach(question => {
+
+        })
+
+        if (this.state.evaluation.questions) {
+            return this.state.evaluation.questions.filter(question => {
+                return question.axis === axisType
+            })
+        }
+
+        const medium = (data) => {
+            var media = 0
+            data.forEach(element => {
+                media += element.value
+            })
+            return media / data.length
+        }
+
+
+    }
+
+    getSelectedValue = (event, question) => {
+        var answers = this.state.evaluationResponse.answers
+        if (answers) {
+            var answer = answers.filter(answer => {
+                return answer.question.id === question.id
+            })[0]
+            if (answer) {
+                return answer.alternative
+            }
+
+        }
+        return undefined
+    }
+
+
 
     render() {
         const { finished, stepIndex } = this.state
 
-        return (
-            <Paper zDepth={1} style={paper}>
-                {/* <div style={{ maxWidth: 380, maxHeight: 400 }}> */}
+
+        if (this.state.evaluationResponse &&
+            this.state.evaluationResponse.evaluation &&
+            this.state.evaluationResponse.evaluation.questions.length > 0) {
+            return <Paper zDepth={1} style={paper}>
                 <Stepper activeStep={stepIndex} orientation="vertical">
-                    {this.state.evaluationResponse &&
-                        this.state.evaluationResponse.evaluation &&
-                        this.state.evaluationResponse.evaluation.questions.map((question, index) => (
-                            <Step>
-                                <StepLabel>{question.title}</StepLabel>
-                                <StepContent>
-                                    <h3>{question.content}</h3>
-                                    <RadioButtonGroup name="alternatives" onChange={this.setAlternativeAsRight.bind(this)} >
-                                        {question.alternatives && question.alternatives.map((alternative, index) => (
-                                            <RadioButton
-                                                value={index}
-                                                label={alternative.content}
-                                                key={index}
-                                                style={{
-                                                    marginTop: 20,
-                                                    marginBottom: 20
-                                                }}
-                                            />
-                                        ))}
-                                    </RadioButtonGroup>
-                                    <div style={{ margin: '12px 0' }}>
-                                        {index > 0 && (
-                                            <FlatButton
-                                                label="Anterior"
-                                                disabled={stepIndex === 0}
-                                                disableTouchRipple={true}
-                                                disableFocusRipple={true}
-                                                onClick={this.handlePrev}
-                                                style={{ marginRight: 12 }}
-                                            />
-                                        )}
-                                        <RaisedButton
-                                            label={stepIndex === this.state.questionsSize - 1 ? 'Finalizar' : 'Próxima'}
+                    {this.state.evaluationResponse.evaluation.questions.map((question, index) => (
+                        <Step key={index}>
+                            <StepLabel>{question.title}</StepLabel>
+                            <StepContent>
+                                <h3>{question.content}</h3>
+                                <RadioButtonGroup name="alternatives"
+                                    onChange={this.setAlternativeAsRight.bind(this, question)}
+                                    valueSelected={this.getSelectedValue(this, question)}>
+                                    {question.alternatives && question.alternatives.map((alternative, index) => (
+                                        <RadioButton
+                                            value={alternative}
+                                            label={alternative.content}
+                                            key={index}
+                                            style={{
+                                                marginTop: 20,
+                                                marginBottom: 20
+                                            }}
+                                        />
+                                    ))}
+
+                                </RadioButtonGroup>
+                                <div style={{ margin: '12px 0' }}>
+                                    {index > 0 && (
+                                        <FlatButton
+                                            label="Anterior"
+                                            disabled={stepIndex === 0}
                                             disableTouchRipple={true}
                                             disableFocusRipple={true}
-                                            disabled={false}
-                                            primary={true}
-                                            onClick={this.handleNext}
+                                            onClick={this.handlePrev}
+                                            style={{ marginRight: 12 }}
                                         />
-                                    </div>
-                                </StepContent>
-                            </Step>
-                        ))}
+                                    )}
+                                    <RaisedButton
+                                        label={stepIndex === this.state.questionsSize - 1 ? 'Finalizar' : 'Próxima'}
+                                        disableTouchRipple={true}
+                                        disableFocusRipple={true}
+                                        disabled={false}
+                                        primary={true}
+                                        onClick={stepIndex === this.state.questionsSize - 1 ? this.saveResponse : this.handleNext}
+                                    />
+                                </div>
+                            </StepContent>
+                        </Step>
+                    ))}
                 </Stepper>
                 {finished && (
                     <p style={{ margin: '20px 0', textAlign: 'center' }}>
+                        <GridList cols={2} cellHeight={'auto'} style={{ textAlign: 'center', margin: 'auto' }}>
+                            <RadarChart cx={300} cy={250} outerRadius={150} width={600} height={500} data={data}>
+                                <PolarGrid />
+                                <PolarAngleAxis dataKey="axis" />
+                                <PolarRadiusAxis />
+                                <Radar name="evaluationResults" dataKey="value" stroke="#00BCD4" fill="#00BCD4" fillOpacity={0.6} />
+                            </RadarChart>
+                            <h1 style={{ position: 'relative', top: '50%' }}>Média Geral: {medium()}</h1>
+                        </GridList>
                         <a href="#" onClick={(event) => {
                             event.preventDefault()
                             this.setState({ stepIndex: 0, finished: false })
-                        }}>Clique aqui</a> se quiser revisar suas respostas.
+                        }}>Clique aqui</a> se quiser responder novamente.
                     </p>
                 )}
-                {/* </div> */}
             </Paper>
-        )
+        } else {
+            return <Paper zDepth={1} style={paper}>
+                Nenhuma questão ainda, por favor, informe a incubadora do problema.
+            </Paper>
+        }
     }
 }
-
 
 const paper = {
     padding: 10
